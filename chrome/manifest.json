@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Social Media Image Scraper",
+  "description": "A chrome extension which scrapes images from social media pages",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": ["JavaScript/tiktok-scraper.js"],
+      "matches": [
+        "https://www.tiktok.com/**"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "commonJS",
+    "outDir": "chrome/JavaScript",
+    "target": "ES2015"
+  }
+}
