@@ -1,15 +1,28 @@
 const grid: HTMLElement = document.getElementById('grid');
+const openAllBtn: HTMLElement = document.getElementById('openAll');
+
+let links: string[] = [];
+
+openAllBtn.addEventListener('click', (): void => {
+    if(links) {
+        links.forEach((link: string): void => {
+            chrome.tabs.create({ url: link }, null);
+        });
+    }
+});
 
 chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
     chrome.tabs.sendMessage(tabs[0].id, 'TikTokScrape', (response): void => {
-        if(response) {
+        if(response?.length) {
             setStatus('');
+            links = response;
             response.forEach((link: string): void => {
                 grid.append(createGridItem(link));
             });
         }
         else {
             setStatus('There is nothing to scrape :(');
+            openAllBtn.setAttribute('disabled', 'true');
         }
     });
 });
