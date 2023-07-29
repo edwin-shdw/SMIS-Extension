@@ -1,10 +1,10 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse): void => {
     if(message === 'TikTokScrape') {
-        sendResponse(scapeTikTokImages());
+        sendResponse(scrapeTikTokImages());
     }
 });
 
-function scapeTikTokImages(): string[] {
+function scrapeTikTokImages(): string[] {
     const sliders: NodeListOf<HTMLElement> = document.querySelectorAll(
         ".swiper-slide:not(.swiper-slide-duplicate)"
     );
