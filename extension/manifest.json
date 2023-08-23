@@ -12,6 +12,12 @@
       "matches": [
         "https://www.tiktok.com/**"
       ]
+    },
+    {
+      "js": ["JavaScript/insta-scraper.js"],
+      "matches": [
+        "https://www.instagram.com/**"
+      ]
     }
   ]
 }

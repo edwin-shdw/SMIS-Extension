@@ -1,6 +1,10 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message === 'TikTokScrape') {
-        sendResponse(scrapeTikTokImages());
+        const response = {
+            site: 'tiktok',
+            imgLinks: scrapeTikTokImages(),
+        };
+        sendResponse(response);
     }
 });
 function scrapeTikTokImages() {

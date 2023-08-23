@@ -13,12 +13,15 @@ openAllBtn.addEventListener('click', (): void => {
 
 chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
     chrome.tabs.sendMessage(tabs[0].id, 'TikTokScrape', (response): void => {
-        if(response?.length) {
+        if(response.imgLinks && response.imgLinks.length) {
             setStatus('');
-            links = response;
-            response.forEach((link: string): void => {
+            links = response.imgLinks;
+            response.imgLinks.forEach((link: string): void => {
                 grid.append(createGridItem(link));
             });
+        }
+        else if(response.site === 'instagram') {
+            setStatus('Images unblocked! Just right click on them :)');
         }
         else {
             setStatus('There is nothing to scrape :(');
