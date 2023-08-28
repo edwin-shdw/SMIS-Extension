@@ -13,7 +13,12 @@ openAllBtn.addEventListener('click', (): void => {
 
 chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
     chrome.tabs.sendMessage(tabs[0].id, 'TikTokScrape', (response): void => {
-        if(response.imgLinks && response.imgLinks.length) {
+        if(!response) {
+            setStatus('There is nothing to scrape :(');
+            openAllBtn.setAttribute('disabled', 'true');
+            chrome.runtime.lastError.message;
+        }
+        else if(response.imgLinks && response.imgLinks.length) {
             setStatus('');
             links = response.imgLinks;
             response.imgLinks.forEach((link: string): void => {
@@ -22,10 +27,6 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
         }
         else if(response.site === 'instagram') {
             setStatus('Images unblocked! Just right click on them :)');
-        }
-        else {
-            setStatus('There is nothing to scrape :(');
-            openAllBtn.setAttribute('disabled', 'true');
         }
     });
 });
