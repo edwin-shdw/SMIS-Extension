@@ -14,9 +14,13 @@ openAllBtn.addEventListener('click', (): void => {
 chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
     chrome.tabs.sendMessage(tabs[0].id, 'TikTokScrape', (response): void => {
         if(!response) {
-            setStatus('There is nothing to scrape :(');
+            setStatus('This extension currently does not support this site :(');
             openAllBtn.setAttribute('disabled', 'true');
             chrome.runtime.lastError.message;
+        }
+        else if(response.imgLinks && response.imgLinks.length < 1) {
+            setStatus('There is nothing to scrape :(');            
+            openAllBtn.setAttribute('disabled', 'true');
         }
         else if(response.imgLinks && response.imgLinks.length) {
             setStatus('');
