@@ -3,6 +3,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const response = {
             site: 'tiktok',
             imgLinks: scrapeTikTokImages(),
+            pathname: window.location.pathname,
         };
         sendResponse(response);
     }

@@ -11,6 +11,12 @@ openAllBtn.addEventListener('click', (): void => {
     }
 });
 
+function getTikTokVideoId(pathname: string) {
+    const paths = pathname.split('/');
+    if(paths[paths.length - 2] !== 'video') return false;
+    return paths[paths.length - 1];
+}
+
 chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
     chrome.tabs.sendMessage(tabs[0].id, 'TikTokScrape', (response): void => {
         if(!response) {
@@ -19,7 +25,18 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
             chrome.runtime.lastError.message;
         }
         else if(response.imgLinks && response.imgLinks.length < 1) {
-            setStatus('There is nothing to scrape :(');            
+            const videoId = getTikTokVideoId(response.pathname);
+            if(videoId) {
+                setStatus('');
+                document.getElementById('openAll').classList.add('d-none');
+                const downloadBtn = document.getElementById('download') as HTMLAnchorElement;
+                downloadBtn.classList.remove('d-none');
+                downloadBtn.href = `https://tikcdn.io/ssstik/${videoId}`;
+                downloadBtn.target = '_blank';
+            }
+            else {
+                setStatus('There is nothing to scrape :(');
+            }
             openAllBtn.setAttribute('disabled', 'true');
         }
         else if(response.imgLinks && response.imgLinks.length) {
