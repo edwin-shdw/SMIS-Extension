@@ -1,4 +1,5 @@
 const grid: HTMLElement = document.getElementById('grid');
+const qrCodeField = document.getElementById('qr-code');
 const openAllBtn: HTMLElement = document.getElementById('openAll');
 
 let links: string[] = [];
@@ -28,11 +29,17 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs): void => {
             const videoId = getTikTokVideoId(response.pathname);
             if(videoId) {
                 setStatus('');
+                const downloadLink = `https://tikcdn.io/ssstik/${videoId}`;
                 document.getElementById('openAll').classList.add('d-none');
                 const downloadBtn = document.getElementById('download') as HTMLAnchorElement;
                 downloadBtn.classList.remove('d-none');
-                downloadBtn.href = `https://tikcdn.io/ssstik/${videoId}`;
+                downloadBtn.href = downloadLink;
                 downloadBtn.target = '_blank';
+
+                const imgNode = document.createElement('img');
+                imgNode.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${downloadLink}`;
+                imgNode.alt = 'Image';
+                qrCodeField.append(imgNode);
             }
             else {
                 setStatus('There is nothing to scrape :(');
