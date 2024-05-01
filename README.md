@@ -1,5 +1,8 @@
 # Social Media Image Scraper
 
+> [!warning]
+> This repo got replaced by [Shatobo](https://github.com/edwin-shdw/Shatobo)
+
 This repository contains the code for a Browser extension which scrapes images from Social Media
 sites. As it is still in development it's only via this repository. If you want to use it, just
 download the [extension](./extension) directory and add it to your browser.
